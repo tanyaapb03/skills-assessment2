@@ -167,18 +167,25 @@ def kids_game(names):
 #create a blank dictionary
 #run a for loop in list and put the words first letter a s key in dictionary and word as value in it 
 #
-    name=names.split(" ")
     game={}
-    output_list=[]
-    for word in name:
-        game[word[0]]=word
+    for word in names:
+        if word[0] in game:
+            game[word[0]].add(word)
+        else:
+            game[word[0]] = set([word])
 
-        if word[len(word)-1] == game.keys():
-
-            output_list.append(game[word[0]])
-
-        return output_list
-
+    word = game[names[0][0]].pop()
+    key = word[len(word)-1]
+    output_list = []
+    output_list.append(word)
+    while key in game:
+        word = game[key].pop()
+        if len(game[key]) == 0:
+            # remove the key from the dict
+            del game[key]
+        output_list.append(word)
+        key = word[len(word)-1]
+    return output_list
 
 
 """Play a kids' word chain game.
